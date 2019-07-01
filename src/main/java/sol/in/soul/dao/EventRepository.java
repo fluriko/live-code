@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    @EntityGraph("Event.users")
+    @EntityGraph("Event.userToEvents")
     List<Event> findAll();
 }

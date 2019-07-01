@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,23 +36,8 @@ public class User {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
-    @JoinTable(name = "USERS_TO_EVENTS",
-            joinColumns = @JoinColumn(name = "FK_USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "   FK_EVENT_ID"))
-    private List<Event> events = new ArrayList<>();
-
-    public User() {
-    }
-
-    public User(Long id, String email, String password, String firstName, String lastName, List<Event> events) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.events = events;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<UserToEvent> userToEvents = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -94,12 +79,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public List<Event> getEvents() {
-        return events;
+    public List<UserToEvent> getUserToEvents() {
+        return userToEvents;
     }
 
-    public void setEvents(List<Event> events) {
-        this.events = events;
+    public void setUserToEvents(List<UserToEvent> userToEvents) {
+        this.userToEvents = userToEvents;
     }
 
     @Override
@@ -112,21 +97,11 @@ public class User {
                 Objects.equals(password, user.password) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
-                Objects.equals(events, user.events);
+                Objects.equals(userToEvents, user.userToEvents);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, firstName, lastName, events);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return Objects.hash(id, email, password, firstName, lastName, userToEvents);
     }
 }

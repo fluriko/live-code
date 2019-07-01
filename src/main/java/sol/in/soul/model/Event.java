@@ -5,9 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "EVENTS")
-@NamedEntityGraph(name = "Event.users", attributeNodes = @NamedAttributeNode("users"))
+@NamedEntityGraph(name = "Event.userToEvents", attributeNodes = @NamedAttributeNode("userToEvents"))
 public class Event {
 
     @Id
@@ -25,17 +25,9 @@ public class Event {
     @Column(name = "NAME")
     private String name;
 
-    @ManyToMany(mappedBy = "events")
-    private List<User> users = new ArrayList<>();
+    @OneToMany(mappedBy = "event")
+    private List<UserToEvent> userToEvents = new ArrayList<>();
 
-    public Event() {
-    }
-
-    public Event(Long id, String name, List<User> users) {
-        this.id = id;
-        this.name = name;
-        this.users = users;
-    }
 
     public Long getId() {
         return id;
@@ -53,12 +45,12 @@ public class Event {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<UserToEvent> getUserToEvents() {
+        return userToEvents;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUserToEvents(List<UserToEvent> userToEvents) {
+        this.userToEvents = userToEvents;
     }
 
     @Override
@@ -68,11 +60,11 @@ public class Event {
         Event event = (Event) o;
         return Objects.equals(id, event.id) &&
                 Objects.equals(name, event.name) &&
-                Objects.equals(users, event.users);
+                Objects.equals(userToEvents, event.userToEvents);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, users);
+        return Objects.hash(id, name, userToEvents);
     }
 }

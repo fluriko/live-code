@@ -17,13 +17,15 @@
 </h2>
 
 <c:forEach var="event" items="${events}">
-    <h4>Id: <c:out value="${event.id}"/> </h4>
+    <h4>EVENT ID: <c:out value="${event.id}"/> </h4>
     <h5>Name: <c:out value="${event.name}"/> </h5>
     <h5>Users: </h5>
-    <c:forEach var="user" items="${event.users}">
-    <h5><c:out value="${user.id}"/>
-        <c:out value="${user.firstName}"/>
-        <c:out value="${user.lastName}"/>
+    <c:forEach var="userToEvents" items="${event.userToEvents}">
+    <h5><c:out value="${userToEvents.user.id}"/>,
+        <c:out value="${userToEvents.user.firstName}"/>
+        <c:out value="${userToEvents.user.lastName}"/>,
+        <c:out value="${userToEvents.status}"/>
+        <a href="<c:url value="/editStatus?ute_id=${userToEvents.id}"/>">Edit status</a>
     </h5>
     </c:forEach>
 </c:forEach>
