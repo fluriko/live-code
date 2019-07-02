@@ -40,7 +40,7 @@ public class EventController {
     @RequestMapping(value = "/editStatus", method = RequestMethod.GET)
     public ModelAndView editStatus(@RequestParam("ute_id") Long id, ModelAndView modelAndView) {
         List<String> statuses = Arrays.stream(Status.values()).map(Enum::toString).collect(toList());
-        modelAndView.addObject("userToEventExt", userToEventService.getById(id).map(UserToEvent::of));
+        modelAndView.addObject("userToEventExt", userToEventService.getById(id).map(UserToEventExt::of));
         modelAndView.addObject("statuses", statuses);
         modelAndView.setViewName("editStatus");
         return modelAndView;
@@ -48,7 +48,7 @@ public class EventController {
 
     @RequestMapping(value = "/editStatus", method = RequestMethod.POST)
     public ModelAndView editStatus(@ModelAttribute("userToEventExt") UserToEventExt userToEventExt, ModelAndView modelAndView) {
-        userToEventService.update(UserToEventExt.of(userToEventExt));
+        userToEventService.update(UserToEvent.of(userToEventExt));
         List<Event> events = eventService.getAll()
                 .orElseGet(Collections::emptyList);
         modelAndView.addObject("events", events);

@@ -1,9 +1,8 @@
 package sol.in.soul.controller.model;
 
-import sol.in.soul.model.Event;
-import sol.in.soul.model.Status;
-import sol.in.soul.model.User;
 import sol.in.soul.model.UserToEvent;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserToEventExt {
     private Long id;
@@ -43,17 +42,18 @@ public class UserToEventExt {
         this.status = status;
     }
 
-    public static UserToEvent of(UserToEventExt ute) {
-        UserToEvent result = new UserToEvent();
-        User user = new User();
-        Event event = new Event();
-
-        user.setId(ute.getUserId());
-        event.setId(ute.getEventId());
-        result.setUser(user);
-        result.setEvent(event);
+    public static UserToEventExt of(UserToEvent ute) {
+        UserToEventExt result = new UserToEventExt();
         result.setId(ute.getId());
-        result.setStatus(Status.valueOf(ute.getStatus()));
+        result.setUserId(ute.getUser().getId());
+        result.setEventId(ute.getEvent().getId());
+        result.setStatus(ute.getStatus().toString());
         return result;
+    }
+
+    public static List<UserToEventExt> of(List<UserToEvent> ute) {
+        return ute.stream()
+                .map(UserToEventExt::of)
+                .collect(Collectors.toList());
     }
 }

@@ -23,7 +23,7 @@
     <label for="eventId">event id</label>
     <spring:input path="eventId" id="eventId"/>
 
-    <label for="status">Choose status:</label><br><br>
+    <label for="status">status</label>
     <%--<spring:radiobuttons path="status" items="${statuses}"/><br><br>
 --%>
 <spring:input path="status" id="status"/>
