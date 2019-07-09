@@ -12,13 +12,16 @@
     <title>All events</title>
 </head>
 <body>
+<a href="<c:url value="/addEvent"/>">add new event</a>
+<br/><br/>
 <h2>
     All events here:
 </h2>
-
 <c:forEach var="event" items="${events}">
     <h4>EVENT ID: <c:out value="${event.id}"/> </h4>
     <h5>Name: <c:out value="${event.name}"/> </h5>
+    <a href="<c:url value="/editEvent?e_id=${event.id}"/>">Edit event</a>
+    <a href="<c:url value="/deleteEvent?e_id=${event.id}"/>">Delete event</a>
     <h5>Users: </h5>
     <c:forEach var="userToEvents" items="${event.userToEvents}">
     <h5><c:out value="${userToEvents.user.id}"/>,

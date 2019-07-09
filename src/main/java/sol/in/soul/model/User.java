@@ -1,16 +1,18 @@
 package sol.in.soul.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,11 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "USERS")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="USER_TYPE",
+        discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorValue("1")
+@NamedEntityGraph(name = "User.userToEvents", attributeNodes = @NamedAttributeNode("userToEvents"))
 public class User {
 
     @Id
@@ -96,12 +103,16 @@ public class User {
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(userToEvents, user.userToEvents);
+                Objects.equals(lastName, user.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, firstName, lastName, userToEvents);
+        return Objects.hash(id, email, password, firstName, lastName);
+    }
+
+    @Override
+    public String toString() {
+        return id + ": " + firstName + " " + lastName;
     }
 }

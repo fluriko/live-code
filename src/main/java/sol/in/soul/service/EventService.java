@@ -6,4 +6,12 @@ import java.util.Optional;
 
 public interface EventService {
     Optional<List<Event>> getAll();
+
+    Optional<Event> create(Event event);
+
+    Optional<Event> getById(Long id);
+
+    Optional<Event> update(Event event);
+
+    void delete(Long id);
 }

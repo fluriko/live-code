@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,17 +22,25 @@ public class UserToEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "FK_USER_ID")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "FK_EVENT_ID")
     private Event event;
 
     @Column(name = "STATUS")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.INVITED;
+
+    public UserToEvent() {
+    }
+
+    public UserToEvent(User user, Event event) {
+        this.user = user;
+        this.event = event;
+    }
 
     public Long getId() {
         return id;
