@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
@@ -31,6 +33,9 @@ public class Event {
     @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
     private List<UserToEvent> userToEvents = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "FK_ORGANIZER_ID")
+    private Organizer organizer;
 
     public Long getId() {
         return id;
@@ -54,6 +59,14 @@ public class Event {
 
     public void setUserToEvents(List<UserToEvent> userToEvents) {
         this.userToEvents = userToEvents;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
     }
 
     public static Event of(EventExt eventExt) {

@@ -2,13 +2,14 @@ package sol.in.soul.controller.model;
 
 import sol.in.soul.model.Event;
 import sol.in.soul.model.User;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class EventExt {
     private Long id;
     private String name;
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     public Long getId() {
         return id;

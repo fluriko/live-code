@@ -20,10 +20,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "USERS")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="USER_TYPE",
-        discriminatorType = DiscriminatorType.INTEGER)
-@DiscriminatorValue("1")
+@Inheritance(strategy = InheritanceType.JOINED)
 @NamedEntityGraph(name = "User.userToEvents", attributeNodes = @NamedAttributeNode("userToEvents"))
 public class User {
 

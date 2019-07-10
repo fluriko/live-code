@@ -84,7 +84,7 @@ public class EventController {
         Event event = eventService.getById(id).orElseGet(Event::new);
         List<User> users = userService.getAll().orElseGet(Collections::emptyList);
         List<User> usersInvited = event.getUserToEvents().stream()
-                .map(ute -> ute.getUser())
+                .map(UserToEvent::getUser)
                 .collect(Collectors.toList());
         List<User> usersNotInvited = users.stream()
                 .filter(u -> !usersInvited.contains(u))

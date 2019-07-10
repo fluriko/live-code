@@ -1,7 +1,6 @@
 package sol.in.soul.service;
 
 import sol.in.soul.model.User;
-
 import java.util.List;
 import java.util.Optional;
 

@@ -18,8 +18,10 @@
 <spring:form modelAttribute="userToEventExt" action="/editStatus" method="post">
 <label for="id">id</label>
     <spring:input path="id" id="id"/>
+
     <label for="userId">user id</label>
     <spring:input path="userId" id="userId"/>
+
     <label for="eventId">event id</label>
     <spring:input path="eventId" id="eventId"/>
 
@@ -27,6 +29,7 @@
     <%--<spring:radiobuttons path="status" items="${statuses}"/><br><br>
 --%>
 <spring:input path="status" id="status"/>
+
     <button type="submit">Submit</button>
 </spring:form>
 </body>
