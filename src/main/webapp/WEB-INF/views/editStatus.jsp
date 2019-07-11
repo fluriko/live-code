@@ -25,10 +25,10 @@
     <label for="eventId">event id</label>
     <spring:input path="eventId" id="eventId"/>
 
-    <label for="status">status</label>
-    <%--<spring:radiobuttons path="status" items="${statuses}"/><br><br>
+    <label for="userStatus">status</label>
+    <%--<spring:radiobuttons path="userStatus" items="${statuses}"/><br><br>
 --%>
-<spring:input path="status" id="status"/>
+<spring:input path="userStatus" id="userStatus"/>
 
     <button type="submit">Submit</button>
 </spring:form>

@@ -8,7 +8,7 @@ public class UserToEventExt {
     private Long id;
     private Long userId;
     private Long eventId;
-    private String status;
+    private String userStatus;
 
     public Long getId() {
         return id;
@@ -34,12 +34,12 @@ public class UserToEventExt {
         this.eventId = eventId;
     }
 
-    public String getStatus() {
-        return status;
+    public String getUserStatus() {
+        return userStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
     }
 
     public static UserToEventExt of(UserToEvent ute) {
@@ -47,7 +47,7 @@ public class UserToEventExt {
         result.setId(ute.getId());
         result.setUserId(ute.getUser().getId());
         result.setEventId(ute.getEvent().getId());
-        result.setStatus(ute.getStatus().toString());
+        result.setUserStatus(ute.getUserStatus().toString());
         return result;
     }
 

@@ -18,7 +18,9 @@
 <spring:form modelAttribute="eventExt" action="/addEvent" method="post">
 
 <label for="name">name</label>
-<spring:input path="name" id="name"/>
+<spring:input path="name" id="name"/><br><br>
+
+    <spring:radiobuttons path="organizer" items="${users}"/><br><br>
 
     <spring:select path="users" items="${users}" multiple="true"/>
 

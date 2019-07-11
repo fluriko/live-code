@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import sol.in.soul.controller.model.EventExt;
 import sol.in.soul.controller.model.UserToEventExt;
 import sol.in.soul.model.Event;
-import sol.in.soul.model.Status;
+import sol.in.soul.model.UserStatus;
 import sol.in.soul.model.User;
 import sol.in.soul.model.UserToEvent;
 import sol.in.soul.service.EventService;
@@ -44,16 +44,23 @@ public class EventController {
 
     @RequestMapping(value = "/editStatus", method = RequestMethod.GET)
     public ModelAndView editStatus(@RequestParam("ute_id") Long id, ModelAndView modelAndView) {
-//        List<String> statuses = Arrays.stream(Status.values()).map(Enum::toString).collect(toList());
+        List<String> statuses = Arrays.stream(UserStatus.values()).map(Enum::toString).collect(toList());
         modelAndView.addObject("userToEventExt", userToEventService.getById(id).map(UserToEventExt::of));
-//        modelAndView.addObject("statuses", statuses);
+        modelAndView.addObject("statuses", statuses);
         modelAndView.setViewName("editStatus");
         return modelAndView;
     }
 
     @RequestMapping(value = "/editStatus", method = RequestMethod.POST)
     public ModelAndView editStatus(@ModelAttribute("userToEventExt") UserToEventExt userToEventExt, ModelAndView modelAndView) {
-        userToEventService.update(UserToEvent.of(userToEventExt));
+        UserToEvent userToEvent = UserToEvent.of(userToEventExt);
+
+        User user = userService.getById(userToEventExt.getUserId()).orElseGet(User::new);
+        Event event = eventService.getById(userToEventExt.getEventId()).orElseGet(Event::new);
+        userToEvent.setUser(user);
+        userToEvent.setEvent(event);
+
+        userToEventService.update(userToEvent);
         List<Event> events = eventService.getAll()
                 .orElseGet(Collections::emptyList);
         modelAndView.addObject("events", events);

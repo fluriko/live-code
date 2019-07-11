@@ -27,7 +27,7 @@
     <h5><c:out value="${userToEvents.user.id}"/>,
         <c:out value="${userToEvents.user.firstName}"/>
         <c:out value="${userToEvents.user.lastName}"/>,
-        <c:out value="${userToEvents.status}"/>
+        <c:out value="${userToEvents.userStatus}"/>
         <a href="<c:url value="/editStatus?ute_id=${userToEvents.id}"/>">Edit status</a>
     </h5>
     </c:forEach>

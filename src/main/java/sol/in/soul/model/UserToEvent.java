@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,9 +29,9 @@ public class UserToEvent {
     @JoinColumn(name = "FK_EVENT_ID")
     private Event event;
 
-    @Column(name = "STATUS")
+    @Column(name = "USER_STATUS")
     @Enumerated(EnumType.STRING)
-    private Status status = Status.INVITED;
+    private UserStatus userStatus = UserStatus.INVITED;
 
     public UserToEvent() {
     }
@@ -66,12 +65,12 @@ public class UserToEvent {
         this.event = event;
     }
 
-    public Status getStatus() {
-        return status;
+    public UserStatus getUserStatus() {
+        return userStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
     }
 
     public static UserToEvent of(UserToEventExt ute) {
@@ -84,7 +83,7 @@ public class UserToEvent {
         result.setUser(user);
         result.setEvent(event);
         result.setId(ute.getId());
-        result.setStatus(Status.valueOf(ute.getStatus()));
+        result.setUserStatus(UserStatus.valueOf(ute.getUserStatus()));
         return result;
     }
 }

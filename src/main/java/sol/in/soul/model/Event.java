@@ -81,20 +81,7 @@ public class Event {
                     return ute;
                 }).collect(Collectors.toList());
         result.setUserToEvents(userToEvents);
+        result.setOrganizer(eventExt.getOrganizer());
         return result;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Event)) return false;
-        Event event = (Event) o;
-        return Objects.equals(id, event.id) &&
-                Objects.equals(name, event.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
     }
 }

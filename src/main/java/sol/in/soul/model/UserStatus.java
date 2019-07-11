@@ -1,6 +1,6 @@
 package sol.in.soul.model;
 
-public enum Status {
+public enum UserStatus {
     INVITED,
     MAYBE,
     YES,
