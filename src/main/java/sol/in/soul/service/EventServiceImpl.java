@@ -37,4 +37,9 @@ public class EventServiceImpl implements EventService {
     public void delete(Long id) {
         eventRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<List<Event>> getAllByOrganizerId(Long id) {
+        return Optional.ofNullable(eventRepository.getAllByOrganizer_Id(id));
+    }
 }

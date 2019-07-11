@@ -1,6 +1,8 @@
 package sol.in.soul.model;
 
 import sol.in.soul.controller.model.EventExt;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Entity
@@ -73,15 +74,10 @@ public class Event {
         Event result = new Event();
         result.setId(eventExt.getId());
         result.setName(eventExt.getName());
-        List<UserToEvent> userToEvents = eventExt.getUsers().stream()
-                .map(u -> {
-                    UserToEvent ute = new UserToEvent();
-                    ute.setUser(u);
-                    ute.setEvent(result);
-                    return ute;
-                }).collect(Collectors.toList());
-        result.setUserToEvents(userToEvents);
-        result.setOrganizer(eventExt.getOrganizer());
+
+        Organizer organizer = new Organizer();
+        organizer.setId(eventExt.getOrganizerId());
+        result.setOrganizer(organizer);
         return result;
     }
 }

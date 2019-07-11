@@ -14,4 +14,6 @@ public interface EventService {
     Optional<Event> update(Event event);
 
     void delete(Long id);
+
+    Optional<List<Event>> getAllByOrganizerId(Long id);
 }

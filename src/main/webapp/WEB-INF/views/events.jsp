@@ -20,6 +20,11 @@
 <c:forEach var="event" items="${events}">
     <h4>EVENT ID: <c:out value="${event.id}"/> </h4>
     <h5>Name: <c:out value="${event.name}"/> </h5>
+    <h5>Organizer:
+        <c:out value="${event.organizer.id}"/> -
+        <c:out value="${event.organizer.firstName}"/>
+        <c:out value="${event.organizer.lastName}"/>
+    </h5>
     <a href="<c:url value="/editEvent?e_id=${event.id}"/>">Edit event</a>
     <a href="<c:url value="/deleteEvent?e_id=${event.id}"/>">Delete event</a>
     <h5>Users: </h5>

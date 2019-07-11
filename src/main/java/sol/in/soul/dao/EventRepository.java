@@ -9,4 +9,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @EntityGraph("Event.userToEvents")
     List<Event> findAll();
+
+    List<Event> getAllByOrganizer_Id(Long id);
 }

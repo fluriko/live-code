@@ -10,10 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 import sol.in.soul.controller.model.EventExt;
 import sol.in.soul.controller.model.UserToEventExt;
 import sol.in.soul.model.Event;
+import sol.in.soul.model.Organizer;
 import sol.in.soul.model.UserStatus;
 import sol.in.soul.model.User;
 import sol.in.soul.model.UserToEvent;
 import sol.in.soul.service.EventService;
+import sol.in.soul.service.OrganizerService;
 import sol.in.soul.service.UserService;
 import sol.in.soul.service.UserToEventService;
 import java.util.Arrays;
@@ -33,6 +35,9 @@ public class EventController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrganizerService organizerService;
 
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public ModelAndView getAll(ModelAndView modelAndView) {
@@ -71,7 +76,12 @@ public class EventController {
     @RequestMapping(value = "/addEvent", method = RequestMethod.GET)
     public ModelAndView create(ModelAndView modelAndView) {
         List<User> users = userService.getAll().orElseGet(Collections::emptyList);
+        List<Long> userIds = users.stream()
+                .map(u -> u.getId())
+                .collect(Collectors.toList());
         modelAndView.addObject("users", users);
+        //TODO how to get id value in view
+        modelAndView.addObject("userIds", userIds);
         modelAndView.addObject("eventExt", new EventExt());
         modelAndView.setViewName("addEvent");
         return modelAndView;
@@ -79,7 +89,31 @@ public class EventController {
 
     @RequestMapping(value = "/addEvent", method = RequestMethod.POST)
     public ModelAndView create(@ModelAttribute EventExt eventExt, ModelAndView modelAndView) {
-        userToEventService.create(eventExt.getUsers(), Event.of(eventExt));
+        Event event = Event.of(eventExt);
+
+        List<User> users = eventExt.getUserIds().stream()
+                .map(id -> userService.getById(id).orElseGet(User::new))
+                .collect(Collectors.toList());
+
+        List<UserToEvent> userToEvents = users.stream()
+                .map(u -> {
+                    UserToEvent ute = new UserToEvent();
+                    ute.setUser(u);
+                    ute.setEvent(event);
+                    return ute;
+                }).collect(Collectors.toList());
+
+        // TODO organizer repository returns null
+        User userOrganizer = userService.getById(eventExt.getOrganizerId())
+                .orElseGet(User::new);
+        Organizer organizer = Organizer.of(userOrganizer);
+
+//        Organizer organizer = organizerService.getById(eventExt.getOrganizerId()).orElseGet(Organizer::new);
+
+        event.setUserToEvents(userToEvents);
+        event.setOrganizer(organizer);
+
+        userToEventService.create(users, event);
         List<Event> events = eventService.getAll().orElseGet(Collections::emptyList);
         modelAndView.addObject("events", events);
         modelAndView.setViewName("events");
@@ -105,7 +139,7 @@ public class EventController {
     @RequestMapping(value = "/editEvent", method = RequestMethod.POST)
     public ModelAndView edit(@ModelAttribute EventExt eventExt, ModelAndView modelAndView) {
         eventService.update(Event.of(eventExt));
-        userToEventService.createWithExistingEvent(eventExt.getUsers(), Event.of(eventExt));
+//        userToEventService.createWithExistingEvent(eventExt.getUsers(), Event.of(eventExt));
         List<Event> events = eventService.getAll().orElseGet(Collections::emptyList);
         modelAndView.addObject("events", events);
         modelAndView.setViewName("events");
@@ -114,6 +148,7 @@ public class EventController {
 
     @RequestMapping(value = "/deleteEvent", method = RequestMethod.GET)
     public ModelAndView delete(@RequestParam("e_id") Long id, ModelAndView modelAndView) {
+        //TODO stopped work
         eventService.delete(id);
         List<Event> events = eventService.getAll().orElseGet(Collections::emptyList);
         modelAndView.addObject("events", events);

@@ -1,6 +1,9 @@
 package sol.in.soul.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -19,6 +22,17 @@ public class Organizer extends User {
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    public static Organizer of(User user) {
+        Organizer result = new Organizer();
+        result.setId(user.getId());
+        result.setFirstName(user.getFirstName());
+        result.setLastName(user.getLastName());
+        result.setEmail(user.getEmail());
+        result.setPassword(user.getPassword());
+        result.setEvents(new ArrayList<>());
+        return result;
     }
 }
 

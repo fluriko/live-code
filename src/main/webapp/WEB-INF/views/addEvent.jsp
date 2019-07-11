@@ -20,9 +20,9 @@
 <label for="name">name</label>
 <spring:input path="name" id="name"/><br><br>
 
-    <spring:radiobuttons path="organizer" items="${users}"/><br><br>
+    <spring:radiobuttons path="organizerId" items="${userIds}" /><br><br>
 
-    <spring:select path="users" items="${users}" multiple="true"/>
+    <spring:select path="userIds" items="${userIds}" multiple="true"/>
 
 <button type="submit">submit</button>
 </spring:form>

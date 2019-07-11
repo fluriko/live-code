@@ -1,8 +1,6 @@
 package sol.in.soul.controller.model;
 
 import sol.in.soul.model.Event;
-import sol.in.soul.model.Organizer;
-import sol.in.soul.model.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,8 +8,8 @@ import java.util.stream.Collectors;
 public class EventExt {
     private Long id;
     private String name;
-    private List<User> users = new ArrayList<>();
-    private Organizer organizer;
+    private List<Long> userIds = new ArrayList<>();
+    private Long organizerId;
 
     public Long getId() {
         return id;
@@ -29,31 +27,31 @@ public class EventExt {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Long> getUserIds() {
+        return userIds;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUserIds(List<Long> userIds) {
+        this.userIds = userIds;
     }
 
-    public Organizer getOrganizer() {
-        return organizer;
+    public Long getOrganizerId() {
+        return organizerId;
     }
 
-    public void setOrganizer(Organizer organizer) {
-        this.organizer = organizer;
+    public void setOrganizerId(Long organizerId) {
+        this.organizerId = organizerId;
     }
 
     public static EventExt of(Event event) {
         EventExt result = new EventExt();
         result.setId(event.getId());
         result.setName(event.getName());
-        List<User> users = event.getUserToEvents().stream()
-                .map(ute -> ute.getUser())
+        List<Long> userIds = event.getUserToEvents().stream()
+                .map(ute -> ute.getUser().getId())
                 .collect(Collectors.toList());
-        result.setUsers(users);
-        result.setOrganizer(event.getOrganizer());
+        result.setUserIds(userIds);
+        result.setOrganizerId(event.getOrganizer().getId());
         return result;
     }
 }

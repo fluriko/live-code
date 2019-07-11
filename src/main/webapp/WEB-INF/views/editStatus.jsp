@@ -13,24 +13,19 @@
     <title>Edit status</title>
 </head>
 <body>
-
+<h2>Edit status</h2>
 
 <spring:form modelAttribute="userToEventExt" action="/editStatus" method="post">
-<label for="id">id</label>
-    <spring:input path="id" id="id"/>
+    <spring:input path="id" id="id" hidden="true"/>
 
-    <label for="userId">user id</label>
-    <spring:input path="userId" id="userId"/>
+    <spring:input path="userId" id="userId" hidden="true"/>
 
-    <label for="eventId">event id</label>
-    <spring:input path="eventId" id="eventId"/>
+    <spring:input path="eventId" id="eventId" hidden="true"/>
 
-    <label for="userStatus">status</label>
-    <%--<spring:radiobuttons path="userStatus" items="${statuses}"/><br><br>
---%>
-<spring:input path="userStatus" id="userStatus"/>
+    <spring:radiobuttons path="userStatus" items="${statuses}"/><br><br>
 
     <button type="submit">Submit</button>
 </spring:form>
+
 </body>
 </html>
