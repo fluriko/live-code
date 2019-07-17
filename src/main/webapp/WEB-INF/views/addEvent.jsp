@@ -22,7 +22,7 @@
 
     <spring:radiobuttons path="organizerId" items="${userIds}" /><br><br>
 
-    <spring:select path="userIds" items="${userIds}" multiple="true"/>
+    <spring:checkboxes path="userIds" items="${userIds}" multiple="true"/>
 
 <button type="submit">submit</button>
 </spring:form>

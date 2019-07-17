@@ -19,6 +19,7 @@ public class UserToEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_TO_EVENT_ID")
     private Long id;
 
     @ManyToOne

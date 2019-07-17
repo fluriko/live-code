@@ -5,12 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "ORGANIZERS")
+@PrimaryKeyJoinColumn(name = "ORGANIZER_ID", referencedColumnName = "USER_ID")
 public class Organizer extends User {
 
     @OneToMany(mappedBy = "organizer")

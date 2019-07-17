@@ -26,12 +26,13 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "EVENT_ID")
     private Long id;
 
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<UserToEvent> userToEvents = new ArrayList<>();
 
     @ManyToOne

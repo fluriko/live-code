@@ -18,7 +18,11 @@
 <spring:input path="id" hidden="true"/>
 <label for="name">name</label>
 <spring:input path="name" id="name"/>
-    <spring:select path="users" items="${usersNotInvited}" multiple="true"/>
+
+    <spring:radiobuttons path="organizerId" items="${userIds}" /><br><br>
+
+    <spring:select path="userIds" items="${userIds}" multiple="true"/>
+
 <button type="submit">submit</button>
 </spring:form>
 </body>
