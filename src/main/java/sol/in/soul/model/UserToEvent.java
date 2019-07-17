@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "USERS_TO_EVENTS")
@@ -86,5 +87,19 @@ public class UserToEvent {
         result.setId(ute.getId());
         result.setUserStatus(UserStatus.valueOf(ute.getUserStatus()));
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserToEvent)) return false;
+        UserToEvent that = (UserToEvent) o;
+        return Objects.equals(user, that.user) &&
+                Objects.equals(event, that.event);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, event);
     }
 }

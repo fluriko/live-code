@@ -20,9 +20,20 @@
 <label for="name">name</label>
 <spring:input path="name" id="name"/><br><br>
 
-    <spring:radiobuttons path="organizerId" items="${userIds}" /><br><br>
+<label>Organizer:</label>
+    <c:forEach var="user" items="${users}">
+        <form:radiobutton path="organizerId" value="${user.id}" checked="true"/>
+        <c:out value="${user.firstName}"/> <c:out value="${user.lastName}"/>
+    </c:forEach>
+    <br><br>
 
-    <spring:checkboxes path="userIds" items="${userIds}" multiple="true"/>
+    <label>invite users:</label>
+    <c:forEach var="user" items="${users}">
+        <form:checkbox path="userIds" value="${user.id}" multiple="true"/>
+        <c:out value="${user.firstName}"/> <c:out value="${user.lastName}"/>
+    </c:forEach>
+
+    <br><br>
 
 <button type="submit">submit</button>
 </spring:form>

@@ -11,6 +11,7 @@ import sol.in.soul.model.UserToEvent;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserToEventServiceImpl implements UserToEventService {
@@ -32,23 +33,13 @@ public class UserToEventServiceImpl implements UserToEventService {
     }
 
     @Override
-    public Optional<Event> createWithExistingEvent(List<User> users, Event event) {
-        return users.stream()
-                .map(u -> new UserToEvent(u, event))
-                .map(userToEventRepository::save)
-                .findFirst()
-                .map(UserToEvent::getEvent);
-    }
-
-    @Override
     @Transactional(rollbackFor = Throwable.class)
     public Optional<Event> create(List<User> users, Event event) {
         Event e = eventRepository.save(event);
-        return users.stream()
+        users.stream()
                 .map(u -> new UserToEvent(u, e))
-                .map(userToEventRepository::save)
-                .findFirst()
-                .map(UserToEvent::getEvent);
+                .forEach(userToEventRepository::save);
+        return Optional.of(e);
     }
 
     @Override

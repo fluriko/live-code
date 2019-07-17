@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Entity
 @Table(name = "EVENTS")
@@ -32,7 +32,7 @@ public class Event {
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<UserToEvent> userToEvents = new ArrayList<>();
 
     @ManyToOne
@@ -71,6 +71,10 @@ public class Event {
         this.organizer = organizer;
     }
 
+    public void addUsers(List<UserToEvent> userToEvents) {
+        this.userToEvents.addAll(userToEvents);
+    }
+
     public static Event of(EventExt eventExt) {
         Event result = new Event();
         result.setId(eventExt.getId());
@@ -80,5 +84,20 @@ public class Event {
         organizer.setId(eventExt.getOrganizerId());
         result.setOrganizer(organizer);
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Event)) return false;
+        Event event = (Event) o;
+        return Objects.equals(id, event.id) &&
+                Objects.equals(name, event.name) &&
+                Objects.equals(organizer, event.organizer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, organizer);
     }
 }

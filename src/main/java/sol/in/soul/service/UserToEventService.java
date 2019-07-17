@@ -12,8 +12,6 @@ public interface UserToEventService {
 
     Optional<UserToEvent> update(UserToEvent userToEvent);
 
-    Optional<Event> createWithExistingEvent(List<User> users, Event event);
-
     Optional<Event> create(List<User> users, Event event);
 
     Optional<List<UserToEvent>> getAll();
@@ -21,4 +19,5 @@ public interface UserToEventService {
     void delete(Long id);
 
     Optional<UserToEvent> create(UserToEvent userToEvent);
+
 }

@@ -19,7 +19,7 @@
 </h2>
 <c:forEach var="event" items="${events}">
     <h4>EVENT ID: <c:out value="${event.id}"/> </h4>
-    <h5>Name: <c:out value="${event.name}"/> </h5>
+    <h2>Name: <c:out value="${event.name}"/> </h2>
     <h5>Organizer:
         <c:out value="${event.organizer.id}"/> -
         <c:out value="${event.organizer.firstName}"/>
